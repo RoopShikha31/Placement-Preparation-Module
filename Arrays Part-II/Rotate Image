@@ -1,0 +1,23 @@
+class Solution(object):
+    def rotate(self, matrix):
+        leng = len(matrix[0])
+        matrix.reverse()
+        listt=[]
+
+        for x in range(len(matrix)):
+            for y in range(len(matrix)):
+                if len(listt)<leng:
+                    listt.append(matrix[y][x])
+                else:
+                    break
+            matrix.append(listt)
+            listt=[]
+
+        matrix.reverse()
+
+        for x in range(leng):
+            matrix.pop()
+
+        matrix.reverse()
+
+        return(matrix)
