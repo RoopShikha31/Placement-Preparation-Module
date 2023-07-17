@@ -1,0 +1,8 @@
+def hasCycle(head):
+        mp = set()
+        while head is not None:
+            if head in mp:
+                return True
+            mp.add(head)
+            head = head.next
+        return False
