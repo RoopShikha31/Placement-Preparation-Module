@@ -1,0 +1,25 @@
+class Solution:
+    def flatten(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        def recurse(node: 'Optional[Node]') -> 'Optional[Node]' :
+            while node:
+                nxt = node.next
+                
+                if not node.child and not node.next:
+                    return node
+                elif node.child:
+                    node.next = node.child
+                    node.child.prev = node
+                    
+                    child_tail = recurse(node.child)
+                    node.child = None
+                                        
+                    if nxt:
+                        child_tail.next = nxt
+                        nxt.prev = child_tail
+                    else:
+                        return child_tail
+
+                node = nxt
+                    
+        recurse(head)
+        return head
