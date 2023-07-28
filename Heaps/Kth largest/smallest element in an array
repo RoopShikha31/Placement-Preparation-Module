@@ -1,0 +1,37 @@
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        left = 0
+        right = len(nums)
+        while right - left > 100:
+            m = left + (right - left) // 2
+            pivot = nums[m]
+            lt = left  # pointer to put next element less than (lt) pivot
+            le = left  # pointer to put next element less or equal (le) pivot
+            for i in range(left, right):
+                if nums[i] > pivot:
+                    nums[i], nums[le] = nums[le], nums[i]
+                    nums[lt], nums[le] = nums[le], nums[lt]
+                    le += 1
+                    lt += 1
+                elif nums[i] == pivot:
+                    nums[i], nums[le] = nums[le], nums[i]
+                    le += 1
+            # [left,  lt) : < pivot
+            # [lt,    le) : = pivot
+            # [le, right) : > pivot
+            lt_cnt = lt - left
+            le_cnt = le - left
+            if k <= lt_cnt:
+                left = left
+                right = left + lt_cnt
+                k = k
+            elif k <= le_cnt:
+                return pivot
+            else:
+                left = left + le_cnt
+                right = right
+                k = k - le_cnt
+        # have a small array left, just sort it, it will work faster
+        rest = [nums[i] for i in range(left, right)]
+        rest.sort(reverse=True)
+        return rest[k-1]
