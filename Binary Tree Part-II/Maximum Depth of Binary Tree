@@ -1,0 +1,11 @@
+
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root : return 0
+        queue = deque()
+        queue.append((root,1))
+        while queue:
+            cur_node = queue.popleft()
+            if cur_node[0].left:queue.append((cur_node[0].left,cur_node[1]+1))
+            if cur_node[0].right:queue.append((cur_node[0].right,cur_node[1]+1))
+        return cur_node[1]
