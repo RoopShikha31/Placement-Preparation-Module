@@ -1,0 +1,20 @@
+    def preorderTraversal(self, root):
+        result=[]
+        node=root
+        while node!=None:
+            #print(node.val)
+            if node.left==None:
+                result.append(node.val)
+                node=node.right
+            else:
+                pre=node.left
+                while pre.right!=node and pre.right!=None:
+                    pre=pre.right
+                if pre.right==None:
+                    result.append(node.val)
+                    pre.right=node
+                    node=node.left
+                else:
+                    pre.right=None
+                    node=node.right
+        return result
